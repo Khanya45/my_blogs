@@ -7,11 +7,16 @@ function status(response) {
 }
 
 
-fetch("https://damp-reef-26653.herokuapp.com/user-registration/")
+const token = 'YOUR_TOKEN_HERE';
+fetch('https://damp-reef-26653.herokuapp.com/user-registration/', {
+  headers: {
+    Authorization: jwt ${token}
+  }
+})
 .then(status)
 .then(res => res.json())
 .then(response => {
-	// console.log(response.status);})
+	 console.log(response);})
 .catch(err => {
 	console.error(err);
 });
