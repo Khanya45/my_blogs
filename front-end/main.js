@@ -20,3 +20,17 @@ fetch('https://damp-reef-26653.herokuapp.com/user-registration/', {
 .catch(err => {
 	console.error(err);
 });
+
+fetch('https://damp-reef-26653.herokuapp.com/auth', {
+  method: 'post',
+  headers: {
+    'Content-Type': 'application/json'
+  },
+  body: JSON.stringify({"username": "gjones67", "password": "jones67"})
+}).then(res => res.json())
+  .then(res => {
+            console.log(res);
+            myStorage = window.localStorage;
+            console.log(res["access_token"]);
+            myStorage.setItem("jwt_token", res["access_token"]);
+   });

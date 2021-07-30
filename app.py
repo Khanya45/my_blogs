@@ -2,7 +2,7 @@ import hmac
 import sqlite3
 import datetime
 from flask_cors import CORS
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify, render_template, url_for
 from flask_jwt import JWT, jwt_required, current_identity
 
 
@@ -82,6 +82,11 @@ def protected():
     return '%s' % current_identity
 
 
+@app.route('/register/')
+def register():
+    return render_template('register.html')
+
+
 @app.route('/user-registration/', methods=["POST"])
 def user_registration():
     response = {}
@@ -104,6 +109,12 @@ def user_registration():
             response["message"] = "success"
             response["status_code"] = 201
         return response
+    # return render_template("index.html")
+
+
+@app.route('/create_blog/')
+def createblog():
+    return render_template("create_blog.html")
 
 
 @app.route('/create-blog/', methods=["POST"])
@@ -197,5 +208,11 @@ def get_post(post_id):
         response["status_code"] = 200
         response["description"] = "Blog post retrieved successfully"
         response["data"] = cursor.fetchone()
-
     return jsonify(response)
+
+
+with sqlite3.connect("blog.db") as conn:
+    cursor = conn.cursor()
+    cursor.execute("SELECT * FROM user")
+    results = cursor.fetchall()
+    print(results)
